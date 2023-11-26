@@ -1,0 +1,22 @@
+#main{
+    border:1px solid red;
+    background-image: url("bgd\\quran.png");
+    background-repeat: no-repeat;
+    height: 680px;
+    width:55%;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em;
+    gap: 0.5em;
+}
+#page{    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    gap: 0.5em;
+    border:1px solid blue;
+}
+#ayat    {display: flex;
+padding: 1em;
+border:1px dotted red;
+border-radius: 0.8em;
+}
