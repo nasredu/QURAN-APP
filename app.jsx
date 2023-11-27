@@ -60,7 +60,7 @@ const useFetch = (url) =>{
 }
 
 // ---------------------------------------
-const DisplaySourat =({listAyats})=>{
+const DisplayAyats =({listAyats})=>{
     // let souratData = getText(url)
     
     return (
@@ -74,27 +74,35 @@ const DisplaySourat =({listAyats})=>{
     );
     
 }
-//   ------------------------------------
-const Main = ({url, data}) => {
-    let  [listAyats, setListAyats] = React.useState(null);
-    let souratNber = 0;
-    let select = document.querySelector("select")
-    let arr = getAllSouratNames(data)
+const createSelectDropDownMenu=(select, arr)=>{
     arr.map(row=>{
         let option = document.createElement('option')
         option.value= row[0]
         option.textContent = row[1]
         select.append(option)
     })
+}
+//   ------------------------------------
+const Main = ({url, data}) => {
+    let  [listAyats, setListAyats] = React.useState(null);
+    let souratNber = 0;
+    let select = document.querySelector("select")
+    let arr = getAllSouratNames(data)
+    createSelectDropDownMenu(select, arr);
     //initially souratNber =0 --> al fatiha
-    setListAyats (getAyatInAPage(data, souratNber, 1).map( (ayat)=>  ayat.text))
+    // let ayatsDS = getAyatInAPage(data, souratNber, 1)
+    // let newListAyatText = ayatsDS.map( (ayat)=>  ayat.text)
+    // listAyats = newListAyatText
+    // setListAyats (newListAyatText)
     // listAyats  =data.data.surahs[souratNber].ayahs.map((sura)=>{ 
     //     return sura.text
     //     })
 
 select.addEventListener('change', ()=>{
     souratNber = document.querySelector("select").selectedIndex 
-    setListAyats( getAyatInAPage(data, souratNber, 2).map( (ayat)=>  ayat.text))
+    let ayatsDS = getAyatInAPage(data, souratNber, 2)
+    let newListAyatText = ayatsDS.map( (ayat)=>  ayat.text)
+    setListAyats (newListAyatText)
     //   listAyats  =data.data.surahs[souratNber].ayahs.map((sura)=>{ 
     //     return sura.text
     //     })
@@ -102,7 +110,7 @@ select.addEventListener('change', ()=>{
     
 
     return ( <section id="main"> 
-             <DisplaySourat listAyats={listAyats}/>   
+            {listAyats && <DisplayAyats listAyats={listAyats}/>   }
             </section> 
             );
 }
