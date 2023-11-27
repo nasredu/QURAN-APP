@@ -1,11 +1,41 @@
 const Header = () => {
-    return ( <header> <h1> header</h1></header> );
+    
+    return ( <header> <h1> header</h1>
+     <select name="sourat" id="sourat"></select>
+    </header> );
 }
 
 const Footer = () => {
     return ( <footer> <h1> footer</h1></footer> );
 }
+//---------------------------
+// to constrcut drop down menu
+const getAllSouratNames  = (data)=>
+{
+  return data.data.surahs.map((soura,index)=>{return [index, soura.name]})
+}
+//------------------------00
+const  getSouraInfo = (souraIndex)=>{
+    let nberPages = data.data.surahs[souraIndex].ayahs[data.data.surahs[souraIndex].ayahs.length-1].page
+  let numberInSurah = data.data.surahs[souraIndex].ayahs[data.data.surahs[souraIndex].ayahs.length-1].numberInSurah
+  return {nberPages, numberInSurah}
+  }
 // -------------------------
+/**
+ * 
+ * @param {json} data 
+ * @param {number} suraNber 
+ * @param {number} pageNber 
+ * @returns {Array}
+ */
+const getAyatInAPage = (data, suraNber, pageNber=2)=> {
+    return data.data.surahs[suraNber].ayahs.filter(
+                (aya,pos)=>{return aya.page===pageNber}
+                                                )
+}
+
+
+//--------------------------
 const useFetch = (url) =>{
     
         const [data, setData] = React.useState(null);
@@ -46,11 +76,30 @@ const DisplaySourat =({listAyats})=>{
 }
 //   ------------------------------------
 const Main = ({url, data}) => {
+    let  [listAyats, setListAyats] = React.useState(null);
+    let souratNber = 0;
+    let select = document.querySelector("select")
+    let arr = getAllSouratNames(data)
+    arr.map(row=>{
+        let option = document.createElement('option')
+        option.value= row[0]
+        option.textContent = row[1]
+        select.append(option)
+    })
+    //initially souratNber =0 --> al fatiha
+    setListAyats (getAyatInAPage(data, souratNber, 1).map( (ayat)=>  ayat.text))
+    // listAyats  =data.data.surahs[souratNber].ayahs.map((sura)=>{ 
+    //     return sura.text
+    //     })
+
+select.addEventListener('change', ()=>{
+    souratNber = document.querySelector("select").selectedIndex 
+    setListAyats( getAyatInAPage(data, souratNber, 2).map( (ayat)=>  ayat.text))
+    //   listAyats  =data.data.surahs[souratNber].ayahs.map((sura)=>{ 
+    //     return sura.text
+    //     })
+})
     
-    let souratNber = 0
-    const  listAyats  =data.data.surahs[souratNber].ayahs.map((sura)=>{ 
-        return sura.text
-        })
 
     return ( <section id="main"> 
              <DisplaySourat listAyats={listAyats}/>   

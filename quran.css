@@ -1,6 +1,14 @@
-#main{
+body{
+    display: flex;
+    border:3px dotted blue;
+}
+#root{display: flex;flex-direction: column;
+flex: 1}
+header, footer {background: darkcyan; color: white;
+border:1px solid red;}
+#main{ flex:1;
     border:1px solid red;
-    background-image: url("bgd\\quran.png");
+    
     background-repeat: no-repeat;
     height: 680px;
     width:55%;
@@ -9,14 +17,25 @@
     padding: 0.5em;
     gap: 0.5em;
 }
-#page{    display: flex;
-    flex-direction: column;
+#page{    flex: 1;
+display: flex;
+    /*! flex-direction: column; */
     padding: 1em;
     gap: 0.5em;
     border:1px solid blue;
+    background-image: url("bgd\\quran.png");
+       background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+min-width: 400px;
+flex-wrap: wrap;
+justify-content: right;
+flex-direction: row-reverse;
 }
-#ayat    {display: flex;
+.ayat    {display: flex;
 padding: 1em;
 border:1px dotted red;
 border-radius: 0.8em;
+justify-content: flex-end;
+background: white;
+/*! justify-content: flex-start; */
 }
